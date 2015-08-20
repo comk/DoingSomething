@@ -1,9 +1,12 @@
-package com.mayhub.doingsomething;
+package com.mayhub.doingsomething.ui;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.mayhub.doingsomething.R;
 
 public class ActivityMain extends ActionBarActivity {
 
@@ -29,6 +32,7 @@ public class ActivityMain extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(getApplication(),ActivityTimeSlotList.class));
             return true;
         }
 
