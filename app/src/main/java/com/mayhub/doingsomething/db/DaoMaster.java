@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
+import com.mayhub.doingsomething.entity.TimeSlot;
+
 import de.greenrobot.dao.AbstractDaoMaster;
 import de.greenrobot.dao.identityscope.IdentityScopeType;
 
@@ -14,11 +16,6 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
  */
 public class DaoMaster extends AbstractDaoMaster {
     public static final int SCHEMA_VERSION = 1000;
-
-    /** Creates underlying database table using DAOs. */
-    public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
-        TimeSlotDao.createTable(db, ifNotExists);
-    }
 
     public static abstract class OpenHelper extends SQLiteOpenHelper {
 
@@ -29,13 +26,31 @@ public class DaoMaster extends AbstractDaoMaster {
         @Override
         public void onCreate(SQLiteDatabase db) {
             Log.i("greenDAO", "Creating tables for schema version " + SCHEMA_VERSION);
-            createAllTables(db, true);
+            TimeSlotDao.createTable(db,false);
         }
     }
 
+    public static class TimeSlotOpenHelper extends OpenHelper{
+
+        public TimeSlotOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory) {
+            super(context, name, factory);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+           TimeSlotDao.dropTable(db,true);
+            onCreate(db);
+        }
+    }
+
+    public DaoMaster(SQLiteDatabase db){
+        super(db,SCHEMA_VERSION);
+        registerDaoClass(TimeSlotDao.class);
+    }
 
     public DaoMaster(SQLiteDatabase db, int schemaVersion) {
         super(db, schemaVersion);
+        registerDaoClass(TimeSlotDao.class);
     }
 
     @Override

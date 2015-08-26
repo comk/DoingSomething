@@ -1,6 +1,7 @@
 package com.mayhub.doingsomething.entity;
 
-import java.util.Date;
+
+import com.mayhub.doingsomething.util.DateUtils;
 
 /**
  * Created by daihai on 2015/8/20.
@@ -8,8 +9,12 @@ import java.util.Date;
 public class TimeSlot {
 
 
-    public TimeSlot(Long id, Date date, String userId, int slotType, String text,
-                    Date lastModifyTime, String referenceObject, String locationLatLng,
+    public TimeSlot(){
+
+    }
+
+    public TimeSlot(Long id, long date, String userId, int slotType, String text,
+                    long lastModifyTime, String referenceObject, String locationLatLng,String locationString,
                     String weather, String imageUrl, String audioUrl, String videoUrl) {
         this.date = date;
         this.userId = userId;
@@ -18,6 +23,7 @@ public class TimeSlot {
         this.lastModifyTime = lastModifyTime;
         this.referenceObject = referenceObject;
         this.locationLatLng = locationLatLng;
+        this.locationString = locationString;
         this.weather = weather;
         this.imageUrl = imageUrl;
         this.audioUrl = audioUrl;
@@ -28,7 +34,7 @@ public class TimeSlot {
     /**
      * 发生的时间
      */
-    private java.util.Date date;
+    private long date;
     /**
      *
      */
@@ -44,7 +50,7 @@ public class TimeSlot {
     /**
      * 最后修改时间
      */
-    private java.util.Date lastModifyTime;
+    private long lastModifyTime;
     /**
      * 相关的对象（人或者物）
      */
@@ -53,6 +59,10 @@ public class TimeSlot {
      * 发生地点(经纬度)
      */
     private String locationLatLng;
+    /**
+     * 发生的地点
+     */
+    private String locationString;
     /**
      * 发生的天气情况
      */
@@ -79,11 +89,11 @@ public class TimeSlot {
         this.id = id;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
@@ -135,11 +145,11 @@ public class TimeSlot {
         this.videoUrl = videoUrl;
     }
 
-    public Date getLastModifyTime() {
+    public long getLastModifyTime() {
         return lastModifyTime;
     }
 
-    public void setLastModifyTime(Date lastModifyTime) {
+    public void setLastModifyTime(long lastModifyTime) {
         this.lastModifyTime = lastModifyTime;
     }
 
@@ -149,6 +159,14 @@ public class TimeSlot {
 
     public void setReferenceObject(String referenceObject) {
         this.referenceObject = referenceObject;
+    }
+
+    public String getLocationString() {
+        return locationString;
+    }
+
+    public void setLocationString(String locationString) {
+        this.locationString = locationString;
     }
 
     public String getLocationLatLng() {
@@ -166,4 +184,5 @@ public class TimeSlot {
     public void setWeather(String weather) {
         this.weather = weather;
     }
+
 }

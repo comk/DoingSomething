@@ -24,7 +24,7 @@ public class DaoSession extends AbstractDaoSession {
             daoConfigMap) {
         super(db);
 
-        timeSlotConfig = daoConfigMap.get(TimeSlot.class).clone();
+        timeSlotConfig = daoConfigMap.get(TimeSlotDao.class).clone();
         timeSlotConfig.initIdentityScope(type);
 
         timeSlotDao = new TimeSlotDao(timeSlotConfig,this);

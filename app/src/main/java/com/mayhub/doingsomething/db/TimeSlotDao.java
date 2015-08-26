@@ -24,17 +24,18 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Date = new Property(1, java.util.Date.class, "date", false, "DATE");
+        public final static Property Date = new Property(1, long.class, "date", false, "DATE");
         public final static Property UserId = new Property(2, String.class, "UserId", false, "USER_ID");
         public final static Property SlotType = new Property(3, int.class, "SlotType", false, "SLOT_TYPE");
         public final static Property Text = new Property(4, String.class, "text", false, "TEXT");
-        public final static Property LastModifyTime = new Property(5, java.util.Date.class, "LastModifyTime", false, "LAST_MODIFY_TIME");
+        public final static Property LastModifyTime = new Property(5, long.class, "LastModifyTime", false, "LAST_MODIFY_TIME");
         public final static Property ReferenceObject = new Property(6, String.class, "ReferenceObject", false, "REFERENCE_OBJECT");
         public final static Property LocationLatLng = new Property(7, String.class, "LocationLatLng", false, "LOCATION_LATLNG");
-        public final static Property Weather = new Property(8, String.class, "Weather", false, "WEATHER");
-        public final static Property ImageUrl = new Property(9, String.class, "ImageUrl", false, "IMAGE_URL");
-        public final static Property AudioUrl = new Property(10, String.class, "AudioUrl", false, "AUDIO_URL");
-        public final static Property VideoUrl = new Property(11, String.class, "VideoUrl", false, "VIDEO_URL");
+        public final static Property LocationString = new Property(8, String.class, "LocationString", false, "LOCATION_STRING");
+        public final static Property Weather = new Property(9, String.class, "Weather", false, "WEATHER");
+        public final static Property ImageUrl = new Property(10, String.class, "ImageUrl", false, "IMAGE_URL");
+        public final static Property AudioUrl = new Property(11, String.class, "AudioUrl", false, "AUDIO_URL");
+        public final static Property VideoUrl = new Property(12, String.class, "VideoUrl", false, "VIDEO_URL");
     };
 
     public TimeSlotDao(DaoConfig config) {
@@ -57,10 +58,11 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
                 "'LAST_MODIFY_TIME' NUMERIC(18) NOT NULL," + // 5: LastModifyTime
                 "'REFERENCE_OBJECT' VARCHAR," + // 6: ReferenceObject
                 "'LOCATION_LATLNG' VARCHAR," + // 7: LocationLatLng
-                "'WEATHER' VARCHAR," + // 8: Weather
-                "'IMAGE_URL' VARCHAR," + // 9: ImageUrl
-                "'AUDIO_URL' VARCHAR," + // 10: AudioUrl
-                "'VIDEO_URL' VARCHAR);"); // 11: VideoUrl
+                "'LOCATION_STRING' VARCHAR," + // 8: LocationString
+                "'WEATHER' VARCHAR," + // 9: Weather
+                "'IMAGE_URL' VARCHAR," + // 10: ImageUrl
+                "'AUDIO_URL' VARCHAR," + // 11: AudioUrl
+                "'VIDEO_URL' VARCHAR);"); // 12: VideoUrl
     }
 
     /** Drops the underlying database table. */
@@ -73,17 +75,18 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
     protected TimeSlot readEntity(Cursor cursor, int offset) {
         return new TimeSlot(
             cursor.getLong(offset + 0), // id
-            new java.util.Date(cursor.getLong(offset + 1)), // date
+            cursor.getLong(offset + 1), // date
             cursor.getString(offset + 2), // userid
             cursor.getInt(offset + 3), // slotType
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // Text
-            new java.util.Date(cursor.getLong(offset + 5)), // LastModifyTime
+            cursor.getLong(offset + 5), // LastModifyTime
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // ReferenceObject
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // LocationLatLng
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // Weather
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // ImageUrl
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // AudioUrl
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // VideoUrl
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // LocationString
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // Weather
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // ImageUrl
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // AudioUrl
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // VideoUrl
         );
     }
 
@@ -95,24 +98,25 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
     @Override
     protected void readEntity(Cursor cursor, TimeSlot entity, int offset) {
         entity.setId(cursor.getLong(offset + 0));
-        entity.setDate(new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setDate(cursor.getLong(offset + 1));
         entity.setUserId(cursor.getString(offset + 2));
         entity.setSlotType(cursor.getInt(offset + 3));
         entity.setText(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setLastModifyTime(new java.util.Date(cursor.getLong(offset + 5)));
+        entity.setLastModifyTime(cursor.getLong(offset + 5));
         entity.setReferenceObject(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setLocationLatLng(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setWeather(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setImageUrl(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setAudioUrl(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setVideoUrl(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setLocationString(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setWeather(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setImageUrl(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setAudioUrl(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setVideoUrl(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
     }
 
     @Override
     protected void bindValues(SQLiteStatement stmt, TimeSlot entity) {
         stmt.clearBindings();
 
-        stmt.bindLong(2, entity.getDate().getTime());
+        stmt.bindLong(2, entity.getDate());
 
         stmt.bindString(3, entity.getUserId());
 
@@ -123,7 +127,7 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
             stmt.bindString(5, text);
         }
 
-        stmt.bindLong(6, entity.getLastModifyTime().getTime());
+        stmt.bindLong(6, entity.getLastModifyTime());
 
         String referenceObj = entity.getText();
         if (referenceObj != null) {
@@ -133,21 +137,25 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
         if (location != null) {
             stmt.bindString(8, location);
         }
+        String locationString = entity.getText();
+        if (locationString != null) {
+            stmt.bindString(9, locationString);
+        }
         String weather = entity.getText();
         if (weather != null) {
-            stmt.bindString(9, weather);
+            stmt.bindString(10, weather);
         }
         String imageUrl = entity.getText();
         if (imageUrl != null) {
-            stmt.bindString(10, imageUrl);
+            stmt.bindString(11, imageUrl);
         }
         String audioUrl = entity.getText();
         if (audioUrl != null) {
-            stmt.bindString(11, audioUrl);
+            stmt.bindString(12, audioUrl);
         }
         String videoUrl = entity.getText();
         if (videoUrl != null) {
-            stmt.bindString(12, videoUrl);
+            stmt.bindString(13, videoUrl);
         }
     }
 
