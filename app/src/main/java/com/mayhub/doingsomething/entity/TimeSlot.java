@@ -319,7 +319,6 @@ public class TimeSlot {
      * @return
      */
     public boolean isTimeSlotCompleted(){
-
         if(date == 0 || TextUtils.isEmpty(userId) || TextUtils.isEmpty(text) || slotType == -1 ||
                 TextUtils.isEmpty(referenceObject) || TextUtils.isEmpty(locationString) ||
                 TextUtils.isEmpty(locationLatLng) || TextUtils.isEmpty(weather) || level == -1){
@@ -336,9 +335,10 @@ public class TimeSlot {
         switch (slotType){
             case 0:
             case 1:
-                return getLevelColor(true);
             case 2:
+                return getLevelColor(true);
             case 3:
+            case 4:
                 return getLevelColor(false);
             default:
                 return Color.rgb(0,0,255);
@@ -366,13 +366,13 @@ public class TimeSlot {
         switch (slotType){
             case 0://无状态
                 return 0;
-            case 1://开心
+            case 1://喜
                 return 0;
-            case 2://愤怒
+            case 2://乐
                 return 0;
-            case 3://伤心
+            case 3://哀
                 return 0;
-            case 4://
+            case 4://怒
                 return 0;
             default:
                 return 0;

@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mayhub.doingsomething.R;
 import com.mayhub.doingsomething.db.TimeSlotDao;
+import com.mayhub.doingsomething.entity.TimeSlot;
 import com.mayhub.doingsomething.util.DateUtils;
 
 
@@ -18,7 +20,7 @@ import com.mayhub.doingsomething.util.DateUtils;
 public class TimeSlotListAdapter extends CursorAdapter{
 
 
-
+    TimeSlot ts = new TimeSlot();
 
     public TimeSlotListAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
@@ -30,6 +32,8 @@ public class TimeSlotListAdapter extends CursorAdapter{
         ViewHolder holder = new ViewHolder();
         holder.tv_text = (TextView) view.findViewById(R.id.timeslot_text);
         holder.tv_time = (TextView) view.findViewById(R.id.timeslot_time);
+        holder.tv_level = (TextView) view.findViewById(R.id.timeslot_level);
+        holder.iv_slotType = (ImageView) view.findViewById(R.id.timeslot_type);
         view.setTag(holder);
         return view;
     }
@@ -39,11 +43,16 @@ public class TimeSlotListAdapter extends CursorAdapter{
         ViewHolder holder = (ViewHolder) view.getTag();
         holder.tv_text.setText(cursor.getString(TimeSlotDao.Properties.Text.ordinal));
         holder.tv_time.setText(DateUtils.getFormattedDate(cursor.getLong(TimeSlotDao.Properties.Date.ordinal)));
+        ts.setSlotType(cursor.getInt(TimeSlotDao.Properties.SlotType.ordinal));
+        ts.setLevel(cursor.getInt(TimeSlotDao.Properties.Level.ordinal));
+        holder.tv_level.setBackgroundColor(ts.getLevelColorBySlotType());
     }
 
     private static class ViewHolder{
         public TextView tv_text;
         public TextView tv_time;
+        public ImageView iv_slotType;
+        public TextView tv_level;
     }
 
 }

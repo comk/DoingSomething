@@ -143,7 +143,11 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
         timeSlot.setSlotType(0);
         timeSlot.setText(editText_content.getText().toString().trim());
         timeSlot.setLastModifyTime(System.currentTimeMillis());
-
+        timeSlot.setLevel(5);
+        timeSlot.setLocationString("未知地址");
+        timeSlot.setLocationLatLng("未知地址");
+        timeSlot.setWeather("天气");
+        timeSlot.setReferenceObject("无对象");
         if(timeSlot.isTimeSlotCompleted()) {
             timeSlotDao.insert(timeSlot);
             EventBus.getDefault().post(new MessageEvent(MessageEvent.EventType.TYPE_TIME_SLOT_ADD));
