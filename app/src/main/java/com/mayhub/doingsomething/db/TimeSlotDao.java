@@ -36,6 +36,7 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
         public final static Property ImageUrl = new Property(10, String.class, "ImageUrl", false, "IMAGE_URL");
         public final static Property AudioUrl = new Property(11, String.class, "AudioUrl", false, "AUDIO_URL");
         public final static Property VideoUrl = new Property(12, String.class, "VideoUrl", false, "VIDEO_URL");
+        public final static Property Level = new Property(13, String.class, "Level", false, "LEVEL");
     };
 
     public TimeSlotDao(DaoConfig config) {
@@ -62,7 +63,8 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
                 "'WEATHER' VARCHAR," + // 9: Weather
                 "'IMAGE_URL' VARCHAR," + // 10: ImageUrl
                 "'AUDIO_URL' VARCHAR," + // 11: AudioUrl
-                "'VIDEO_URL' VARCHAR);"); // 12: VideoUrl
+                "'VIDEO_URL' VARCHAR," + //  12: VideoUrl
+                "'LEVEL' INT NOT NULL);"); // 13: Level
     }
 
     /** Drops the underlying database table. */
@@ -86,7 +88,8 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // Weather
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // ImageUrl
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // AudioUrl
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // VideoUrl
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // VideoUrl
+            cursor.getInt(offset + 13)//level
         );
     }
 
@@ -110,6 +113,7 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
         entity.setImageUrl(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setAudioUrl(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setVideoUrl(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setLevel(cursor.getInt(offset + 13));
     }
 
     @Override
@@ -157,6 +161,7 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
         if (videoUrl != null) {
             stmt.bindString(13, videoUrl);
         }
+        stmt.bindLong(14,entity.getLevel());
     }
 
     @Override

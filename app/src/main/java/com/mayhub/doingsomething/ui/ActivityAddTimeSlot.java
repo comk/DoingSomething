@@ -1,6 +1,5 @@
 package com.mayhub.doingsomething.ui;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.os.Bundle;
@@ -26,8 +25,8 @@ import com.mayhub.doingsomething.entity.MessageEvent;
 import com.mayhub.doingsomething.entity.TimeSlot;
 import com.mayhub.doingsomething.ui.base.ActivityBaseNoTitle;
 import com.mayhub.doingsomething.util.InputMethodTool;
+import com.mayhub.doingsomething.util.ToastUtils;
 
-import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -49,8 +48,6 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
     private TimeSlot timeSlot = new TimeSlot();
 
     private Button btn_submit;
-
-    Cursor cursor;
 
     SQLiteDatabase db;
 
@@ -146,9 +143,13 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
         timeSlot.setSlotType(0);
         timeSlot.setText(editText_content.getText().toString().trim());
         timeSlot.setLastModifyTime(System.currentTimeMillis());
-        timeSlotDao.insert(timeSlot);
 
-        EventBus.getDefault().post(new MessageEvent(MessageEvent.EventType.TYPE_TIME_SLOT_ADD));
+        if(timeSlot.isTimeSlotCompleted()) {
+            timeSlotDao.insert(timeSlot);
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.EventType.TYPE_TIME_SLOT_ADD));
+        }else{
+            ToastUtils.showShortToast(getApplicationContext(),"请将信息填写完整");
+        }
 
     }
 
@@ -156,7 +157,7 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
     public void onLocationChanged(AMapLocation amapLocation) {
         if (amapLocation!=null&&amapLocation.getAMapException().getErrorCode() == 0) {
             timeSlot.setLocationLatLng(amapLocation.getLatitude() + "," + amapLocation.getLongitude());
-            timeSlot.setLocationString(amapLocation.getCountry() + "," + amapLocation.getProvince() + "," + amapLocation.getCity() + "," + amapLocation.getDistrict());
+            timeSlot.setLocationString(amapLocation.getCountry() + "," + amapLocation.getProvince() + "," + amapLocation.getCity() + "," + amapLocation.getDistrict() + "," + amapLocation.getStreet());
         }
     }
 

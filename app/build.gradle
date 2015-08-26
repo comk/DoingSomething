@@ -28,4 +28,5 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.18'
     compile 'de.greenrobot:greendao:2.0.0'
     compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.3'
 }

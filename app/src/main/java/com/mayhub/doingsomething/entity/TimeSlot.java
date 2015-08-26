@@ -1,13 +1,16 @@
 package com.mayhub.doingsomething.entity;
 
 
-import com.mayhub.doingsomething.util.DateUtils;
+import android.graphics.Color;
+import android.text.TextUtils;
+
 
 /**
  * Created by daihai on 2015/8/20.
  */
 public class TimeSlot {
 
+    public static final int MAX_LEVEL = 12;
 
     public TimeSlot(){
 
@@ -15,7 +18,7 @@ public class TimeSlot {
 
     public TimeSlot(Long id, long date, String userId, int slotType, String text,
                     long lastModifyTime, String referenceObject, String locationLatLng,String locationString,
-                    String weather, String imageUrl, String audioUrl, String videoUrl) {
+                    String weather, String imageUrl, String audioUrl, String videoUrl, int level) {
         this.date = date;
         this.userId = userId;
         this.slotType = slotType;
@@ -28,6 +31,7 @@ public class TimeSlot {
         this.imageUrl = imageUrl;
         this.audioUrl = audioUrl;
         this.videoUrl = videoUrl;
+        this.level = level;
     }
 
     private Long id;
@@ -42,7 +46,11 @@ public class TimeSlot {
     /**
      * 类型
      */
-    private int slotType;
+    private int slotType = -1;
+    /**
+     * 级别 共12级
+     */
+    private int level = -1;
     /**
      * 文本内容
      */
@@ -183,6 +191,76 @@ public class TimeSlot {
 
     public void setWeather(String weather) {
         this.weather = weather;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    /**
+     * 验证信息是否完整
+     * @return
+     */
+    public boolean isTimeSlotCompleted(){
+
+        if(date == 0 || TextUtils.isEmpty(userId) || TextUtils.isEmpty(text) || slotType == -1 ||
+                TextUtils.isEmpty(referenceObject) || TextUtils.isEmpty(locationString) ||
+                TextUtils.isEmpty(locationLatLng) || TextUtils.isEmpty(weather) || level == -1){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 好的用绿色表示，坏的用红色表示
+     * @return
+     */
+    public int getLevelColorBySlotType(){
+
+        switch (slotType){
+            case 0:
+            case 1:
+                return getLevelColor(true);
+            case 2:
+            case 3:
+                return getLevelColor(false);
+            default:
+                return Color.rgb(0,0,255);
+        }
+    }
+
+    /**
+     *
+     * @param isNiceThing true 代表好的事物
+     * @return
+     */
+    public int getLevelColor(boolean isNiceThing){
+        if(isNiceThing){
+            return Color.rgb(0,(int)(((float)level/MAX_LEVEL)*255),255);
+        }else{
+            return Color.rgb((int)(((float)level/MAX_LEVEL)*255),0,255);
+        }
+    }
+
+    public int getImageResBySlotType(){
+        switch (slotType){
+            case 0://无状态
+                return 0;
+            case 1://开心
+                return 0;
+            case 2://愤怒
+                return 0;
+            case 3://伤心
+                return 0;
+            case 4://
+                return 0;
+            default:
+                return 0;
+        }
     }
 
 }
