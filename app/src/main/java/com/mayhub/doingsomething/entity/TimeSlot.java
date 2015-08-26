@@ -358,7 +358,11 @@ public class TimeSlot {
         }
     }
 
-    public int getImageResBySlotType(){
+    /**
+     * 获取对应的图片资源ID
+     * @return
+     */
+    public int getImageResIDBySlotType(){
         switch (slotType){
             case 0://无状态
                 return 0;
