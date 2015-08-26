@@ -140,10 +140,10 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
     private void submitTimeSlot() {
         timeSlot.setUserId("userid" + System.currentTimeMillis());
         timeSlot.setDate(System.currentTimeMillis());
-        timeSlot.setSlotType(0);
+        timeSlot.setSlotType((int) (Math.random() * 5));
         timeSlot.setText(editText_content.getText().toString().trim());
         timeSlot.setLastModifyTime(System.currentTimeMillis());
-        timeSlot.setLevel(5);
+        timeSlot.setLevel((int) (Math.random() * 13));
         timeSlot.setLocationString("未知地址");
         timeSlot.setLocationLatLng("未知地址");
         timeSlot.setWeather("天气");
