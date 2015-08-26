@@ -67,7 +67,7 @@ public class ActivityTimeSlotList extends ActivityBaseNoTitle implements View.On
         timeSlotDao = daoSession.getTimeSlotDao();
 
         String textColumn = TimeSlotDao.Properties.Text.columnName;
-        String orderBy = textColumn + " COLLATE LOCALIZED ASC";
+        String orderBy = TimeSlotDao.Properties.Date.columnName + " desc";
         cursor = db.query(timeSlotDao.getTablename(), timeSlotDao.getAllColumns(), null, null, null, null, orderBy);
         String[] from = { textColumn, TimeSlotDao.Properties.Text.columnName };
         int[] to = { android.R.id.text1, android.R.id.text2 };
