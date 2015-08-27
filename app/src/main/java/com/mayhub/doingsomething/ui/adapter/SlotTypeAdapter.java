@@ -2,8 +2,11 @@ package com.mayhub.doingsomething.ui.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.mayhub.doingsomething.util.DensityUtils;
 
 import java.util.ArrayList;
 
@@ -39,6 +42,8 @@ public class SlotTypeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
             convertView = new ImageView(parent.getContext());
+            int width = DensityUtils.dp2px(parent.getContext(),60);
+            convertView.setLayoutParams(new AbsListView.LayoutParams(width,width));
         }
 
         ImageView iv = (ImageView) convertView;
