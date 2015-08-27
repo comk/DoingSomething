@@ -4,6 +4,8 @@ package com.mayhub.doingsomething.entity;
 import android.graphics.Color;
 import android.text.TextUtils;
 
+import com.mayhub.doingsomething.R;
+
 
 /**
  * Created by daihai on 2015/8/20.
@@ -365,17 +367,17 @@ public class TimeSlot {
     public int getImageResIDBySlotType(){
         switch (slotType){
             case 0://无状态
-                return 0;
+                return R.drawable.slot_type_normal;
             case 1://喜
-                return 0;
+                return R.drawable.slot_type_enjoy;
             case 2://乐
-                return 0;
+                return R.drawable.slot_type_happy;
             case 3://哀
-                return 0;
+                return R.drawable.slot_type_sad;
             case 4://怒
-                return 0;
+                return R.drawable.slot_type_angry;
             default:
-                return 0;
+                return R.drawable.slot_type_normal;
         }
     }
 

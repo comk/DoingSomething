@@ -1,13 +1,16 @@
 package com.mayhub.doingsomething.ui;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocalWeatherForecast;
@@ -23,10 +26,14 @@ import com.mayhub.doingsomething.db.DaoSession;
 import com.mayhub.doingsomething.db.TimeSlotDao;
 import com.mayhub.doingsomething.entity.MessageEvent;
 import com.mayhub.doingsomething.entity.TimeSlot;
+import com.mayhub.doingsomething.ui.adapter.SlotLevelAdapter;
+import com.mayhub.doingsomething.ui.adapter.SlotTypeAdapter;
 import com.mayhub.doingsomething.ui.base.ActivityBaseNoTitle;
 import com.mayhub.doingsomething.util.InputMethodTool;
 import com.mayhub.doingsomething.util.ToastUtils;
 
+
+import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 
@@ -49,6 +56,10 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
 
     private Button btn_submit;
 
+    private Spinner spinnerType;
+
+    private Spinner spinnerLevel;
+
     SQLiteDatabase db;
 
     DaoMaster daoMaster;
@@ -56,6 +67,11 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
     DaoSession daoSession;
 
     TimeSlotDao timeSlotDao;
+
+    private ArrayList<Integer> slotType = new ArrayList<>();
+    private SlotTypeAdapter slotTypeAdapter;
+
+    private SlotLevelAdapter slotLevelAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +83,8 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
 
         initToolbar();
 
+        initSlotType();
+
         initContentView();
 
         initDao();
@@ -74,6 +92,16 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
         initLocation();
 
     }
+
+    private void initSlotType() {
+        slotType.add(R.drawable.slot_type_normal);
+        slotType.add(R.drawable.slot_type_enjoy);
+        slotType.add(R.drawable.slot_type_happy);
+        slotType.add(R.drawable.slot_type_sad);
+        slotType.add(R.drawable.slot_type_angry);
+    }
+
+
 
     /**
      * 初始化定位
@@ -104,7 +132,28 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
 
         btn_submit = (Button) findViewById(R.id.timeslot_add_btn_submit);
 
+        spinnerLevel = (Spinner) findViewById(R.id.timeslot_sp_level);
+
+        spinnerType = (Spinner) findViewById(R.id.timeslot_sp_type);
+
         btn_submit.setOnClickListener(this);
+
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                slotLevelAdapter.resetSlotLevel(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerType.setAdapter(slotTypeAdapter = new SlotTypeAdapter(slotType));
+
+        spinnerLevel.setAdapter(slotLevelAdapter = new SlotLevelAdapter());
+
     }
 
     private void initDao() {
@@ -140,10 +189,10 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
     private void submitTimeSlot() {
         timeSlot.setUserId("userid" + System.currentTimeMillis());
         timeSlot.setDate(System.currentTimeMillis());
-        timeSlot.setSlotType((int) (Math.random() * 5));
+        timeSlot.setSlotType(spinnerType.getSelectedItemPosition());
         timeSlot.setText(editText_content.getText().toString().trim());
         timeSlot.setLastModifyTime(System.currentTimeMillis());
-        timeSlot.setLevel((int) (Math.random() * 13));
+        timeSlot.setLevel(spinnerLevel.getSelectedItemPosition());
         timeSlot.setLocationString("未知地址");
         timeSlot.setLocationLatLng("未知地址");
         timeSlot.setWeather("天气");

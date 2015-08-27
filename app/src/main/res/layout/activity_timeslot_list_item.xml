@@ -38,9 +38,10 @@
 
     <TextView
         android:id="@+id/timeslot_level"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="20dp"
         android:layout_toRightOf="@id/timeslot_type"
+        android:layout_marginLeft="5dp"
         />
 
     <TextView
@@ -49,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/timeslot_level"
         android:layout_toRightOf="@id/timeslot_type"
+        android:layout_marginLeft="5dp"
         android:textColor="@android:color/black"
         android:maxLines="2"
         />

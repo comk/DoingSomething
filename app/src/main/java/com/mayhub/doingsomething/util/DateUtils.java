@@ -53,18 +53,24 @@ public class DateUtils {
      */
     public static int subDay(long startTime, long endTime) {
         Calendar can1 = calendarThreadLocal.get();
+
         can1.setTimeInMillis(startTime);
-        Calendar can2 = calendarThreadLocal.get();
-        can2.setTimeInMillis(endTime);
+        int dayOfYear1 = can1.get(Calendar.DAY_OF_YEAR);
+        int year1 = can1.get(Calendar.YEAR);
+
+        can1.setTimeInMillis(endTime);
+        int dayOfYear2 = can1.get(Calendar.DAY_OF_YEAR);
+        int year2 = can1.get(Calendar.YEAR);
+
         long durationMills = Math.abs(startTime - endTime);
         int days = (int) (durationMills/dayMills);
-        if(days >= 2){
+        if(days > 2){
             return days;
         }else{
-            if(can1.get(Calendar.YEAR) == can2.get(Calendar.YEAR)) {
-                return can1.get(Calendar.DAY_OF_YEAR) - can2.get(Calendar.DAY_OF_YEAR);
+            if(year1 == year2) {
+                return dayOfYear1 - dayOfYear2;
             }else{
-                return can1.get(Calendar.DAY_OF_YEAR) - can2.get(Calendar.DAY_OF_YEAR) + (isLeapYear(can2.get(Calendar.DAY_OF_YEAR)) ? 366 : 365);
+                return dayOfYear1 - dayOfYear2 + (isLeapYear(dayOfYear2) ? 366 : 365);
             }
         }
     }

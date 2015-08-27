@@ -46,6 +46,7 @@ public class TimeSlotListAdapter extends CursorAdapter{
         ts.setSlotType(cursor.getInt(TimeSlotDao.Properties.SlotType.ordinal));
         ts.setLevel(cursor.getInt(TimeSlotDao.Properties.Level.ordinal));
         holder.tv_level.setBackgroundColor(ts.getLevelColorBySlotType());
+        holder.iv_slotType.setImageResource(ts.getImageResIDBySlotType());
     }
 
     private static class ViewHolder{
