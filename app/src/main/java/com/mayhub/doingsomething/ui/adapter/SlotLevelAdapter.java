@@ -1,7 +1,6 @@
 package com.mayhub.doingsomething.ui.adapter;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,7 +27,6 @@ public class SlotLevelAdapter extends BaseAdapter {
         for (int i = 0;i <= TimeSlot.MAX_LEVEL;i++){
             data.add( Color.rgb(slotType > 2 ? (int) (((float) i / TimeSlot.MAX_LEVEL) * 255) : 0,
                     slotType <= 2 ? (int) (((float) i / TimeSlot.MAX_LEVEL) * 255) : 0, 255));
-            Log.e("slotLevel ",i + ", rgb = " + data.get(i));
         }
         notifyDataSetChanged();
     }

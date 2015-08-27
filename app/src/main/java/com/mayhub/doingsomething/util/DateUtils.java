@@ -1,7 +1,5 @@
 package com.mayhub.doingsomething.util;
 
-import android.util.Log;
-
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,7 +14,6 @@ public class DateUtils {
     public static String getFormattedDate(long date){
 
         int duration = subDay(System.currentTimeMillis(), date);
-        Log.e("duration =  ",""+duration);
         if(Math.abs(duration) < 1){
             return "今天 " + DateUtils.getTimeString(date);
         }else if(Math.abs(duration) < 2){

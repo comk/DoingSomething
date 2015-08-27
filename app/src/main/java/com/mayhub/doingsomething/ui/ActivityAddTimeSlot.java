@@ -1,7 +1,6 @@
 package com.mayhub.doingsomething.ui;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
