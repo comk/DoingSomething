@@ -1,14 +1,18 @@
 package com.mayhub.doingsomething.ui;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,9 +29,11 @@ import com.mayhub.doingsomething.db.DaoSession;
 import com.mayhub.doingsomething.db.TimeSlotDao;
 import com.mayhub.doingsomething.entity.MessageEvent;
 import com.mayhub.doingsomething.entity.TimeSlot;
+import com.mayhub.doingsomething.ui.adapter.SlotImageAdapter;
 import com.mayhub.doingsomething.ui.adapter.SlotLevelAdapter;
 import com.mayhub.doingsomething.ui.adapter.SlotTypeAdapter;
 import com.mayhub.doingsomething.ui.base.ActivityBaseNoTitle;
+import com.mayhub.doingsomething.util.ImageUtils;
 import com.mayhub.doingsomething.util.InputMethodTool;
 import com.mayhub.doingsomething.util.ToastUtils;
 
@@ -39,7 +45,9 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by daihai on 2015/8/20.
  */
-public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnClickListener,AMapLocationListener,AMapLocalWeatherListener {
+public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnClickListener,AMapLocationListener,AMapLocalWeatherListener,SlotImageAdapter.onTtemClickListener {
+
+    private String imagePath;
 
     LocationManagerProxy mLocationManagerProxy;
 
@@ -71,6 +79,8 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
     private SlotTypeAdapter slotTypeAdapter;
 
     private SlotLevelAdapter slotLevelAdapter;
+
+    private SlotImageAdapter slotImageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +136,17 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
         editText_content = (EditText) findViewById(R.id.timeslot_add_et_content);
 
         recyclerView_image = (RecyclerView) findViewById(R.id.timeslot_add_recyclerview_image);
+        recyclerView_image.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        DefaultItemAnimator dia = new DefaultItemAnimator();
+        dia.setAddDuration(400);
+        dia.setMoveDuration(400);
+        dia.setRemoveDuration(400);
+        dia.setChangeDuration(400);
+        recyclerView_image.setItemAnimator(dia);
+
+        recyclerView_image.setAdapter(slotImageAdapter = new SlotImageAdapter());
+
+        slotImageAdapter.setOnTtemClickListener(this);
 
         textView_location = (TextView) findViewById(R.id.timeslot_add_tv_select_location);
 
@@ -152,6 +173,7 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
         spinnerType.setAdapter(slotTypeAdapter = new SlotTypeAdapter(slotType));
 
         spinnerLevel.setAdapter(slotLevelAdapter = new SlotLevelAdapter());
+
 
     }
 
@@ -242,4 +264,38 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
     public void onWeatherForecaseSearched(AMapLocalWeatherForecast aMapLocalWeatherForecast) {
 
     }
+
+    @Override
+    public void onImageClick(ImageView imageView, int position, String url) {
+
+    }
+
+    @Override
+    public void onDeleteClick(ImageView imageView, int position, String url) {
+
+    }
+
+    @Override
+    public void onAddClick(int position) {
+        try {
+//            ImageUtils.chooseImageFromPhoto(this);
+            imagePath = ImageUtils.chooseImageFromCamera(this);
+        }catch (Exception ex){
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK
+                && (requestCode == ImageUtils.ChooserType.REQUEST_PICK_PICTURE || requestCode == ImageUtils.ChooserType.REQUEST_CAPTURE_PICTURE)) {
+                if(ImageUtils.ChooserType.REQUEST_PICK_PICTURE == requestCode) {
+                    imagePath = data.getData().toString();
+                }
+            slotImageAdapter.addImage(imagePath);
+        }
+    }
+
+
+
+
 }

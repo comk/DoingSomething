@@ -57,26 +57,126 @@
            android:layout_height="wrap_content"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        >
 
-    <EditText
-        android:id="@+id/timeslot_add_et_content"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="相关"
+            />
+        <Spinner
+            android:id="@+id/timeslot_sp_referenceObj"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="40dp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="地点"
+            />
+        <TextView
+            android:id="@+id/timeslot_add_tv_select_location"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="天气"
+            />
+        <TextView
+            android:id="@+id/timeslot_add_tv_weather"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="描述"
+            />
+        <EditText
+            android:id="@+id/timeslot_add_et_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="5"
-        android:lines="3"
-        />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/timeslot_add_recyclerview_image"
-        android:layout_width="match_parent"
-        android:layout_height="78dp"
-        android:visibility="gone"
-        />
-    <TextView
-        android:id="@+id/timeslot_add_tv_select_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        />
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="图片"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/timeslot_add_recyclerview_image"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="78dp"
+            />
+    </LinearLayout>
 
     <Button
         android:id="@+id/timeslot_add_btn_submit"
