@@ -42,9 +42,9 @@ public class ImageUtils {
             File file;
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                    Uri.fromFile(file = new File(ImageLoader.getInstance().getDiskCache().getDirectory(), Calendar.getInstance().getTimeInMillis() + ",jpg")));
+                    Uri.fromFile(file = new File(ImageLoader.getInstance().getDiskCache().getDirectory(), Calendar.getInstance().getTimeInMillis() + ".jpg")));
             context.startActivityForResult(intent, ChooserType.REQUEST_CAPTURE_PICTURE);
-        return file.getAbsolutePath();
+        return "file;//"+file.getAbsolutePath();
     }
 
 

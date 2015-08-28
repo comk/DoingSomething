@@ -6,6 +6,8 @@ import android.text.TextUtils;
 
 import com.mayhub.doingsomething.R;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by daihai on 2015/8/20.

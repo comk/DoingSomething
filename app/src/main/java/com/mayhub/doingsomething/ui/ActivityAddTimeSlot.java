@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -218,9 +219,11 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
         timeSlot.setLocationLatLng("未知地址");
         timeSlot.setWeather("天气");
         timeSlot.setReferenceObject("无对象");
+        timeSlot.setImageUrl(slotImageAdapter.getListString());
         if(timeSlot.isTimeSlotCompleted()) {
             timeSlotDao.insert(timeSlot);
             EventBus.getDefault().post(new MessageEvent(MessageEvent.EventType.TYPE_TIME_SLOT_ADD));
+            finish();
         }else{
             ToastUtils.showShortToast(getApplicationContext(),"请将信息填写完整");
         }
@@ -272,16 +275,19 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
 
     @Override
     public void onDeleteClick(ImageView imageView, int position, String url) {
-
+        slotImageAdapter.deleteImage(position);
     }
 
     @Override
     public void onAddClick(int position) {
-        try {
+//        try {
 //            ImageUtils.chooseImageFromPhoto(this);
-            imagePath = ImageUtils.chooseImageFromCamera(this);
-        }catch (Exception ex){
-        }
+////            imagePath = ImageUtils.chooseImageFromCamera(this);
+//        }catch (Exception ex){
+//        }
+
+        startActivityForResult(new Intent(getApplicationContext(), ActivityImageChooser.class), ActivityImageChooser.REQUEST_GET_IMAGES);
+
     }
 
     @Override
@@ -292,10 +298,13 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
                     imagePath = data.getData().toString();
                 }
             slotImageAdapter.addImage(imagePath);
+            recyclerView_image.findViewWithTag(slotImageAdapter.getItemCount()-1).setTag(slotImageAdapter.getItemCount() - 1);
         }
+
+        if(resultCode == RESULT_OK && requestCode == ActivityImageChooser.REQUEST_GET_IMAGES){
+            slotImageAdapter.addImageList(data.getStringArrayListExtra("ImageList"));
+        }
+
     }
-
-
-
 
 }

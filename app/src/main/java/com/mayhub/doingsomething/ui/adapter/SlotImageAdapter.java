@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mayhub.doingsomething.R;
+import com.mayhub.doingsomething.util.StringUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -31,6 +32,10 @@ public class SlotImageAdapter extends RecyclerView.Adapter<SlotImageAdapter.Slot
         }
     }
 
+    public String getListString(){
+       return StringUtils.getStringFromArrayList(new ArrayList<String>(data.subList(0,data.size() - 1)));
+    }
+
     public SlotImageAdapter.onTtemClickListener getOnTtemClickListener() {
         return onTtemClickListener;
     }
@@ -39,11 +44,20 @@ public class SlotImageAdapter extends RecyclerView.Adapter<SlotImageAdapter.Slot
         this.onTtemClickListener = onTtemClickListener;
     }
 
+    public void addImageList(ArrayList<String> datas){
+        data.addAll(data.size()-1, datas);
+        notifyItemRangeInserted(data.size()-1-datas.size(),datas.size());
+    }
+
     public void addImage(String url){
-        Log.e("image url = ",url);
-        data.add(0, url);
+        data.add(data.size()-1, url);
         notifyItemInserted(data.size() - 2);
-//        notifyDataSetChanged();
+    }
+
+    public void deleteImage(int pos){
+        data.remove(pos);
+        notifyItemRemoved(pos);
+        notifyItemRangeChanged(pos,data.size() - pos - 1);
     }
 
     @Override
@@ -59,7 +73,7 @@ public class SlotImageAdapter extends RecyclerView.Adapter<SlotImageAdapter.Slot
         if(position == getItemCount() - 1){
             holder.imageView.setImageResource(R.drawable.add_slot_add_image);
             holder.imageViewClose.setVisibility(View.INVISIBLE);
-            holder.imageView.setTag(position);
+            holder.imageView.setTag(-1);
         }else {
             ImageLoader.getInstance().displayImage(data.get(position),holder.imageView);
             holder.imageView.setTag(position);
@@ -81,7 +95,6 @@ public class SlotImageAdapter extends RecyclerView.Adapter<SlotImageAdapter.Slot
             imageView = (ImageView) itemView.findViewById(R.id.item_image);
             imageViewClose = (ImageView) itemView.findViewById(R.id.item_delete);
         }
-
     }
 
     @Override
@@ -93,7 +106,7 @@ public class SlotImageAdapter extends RecyclerView.Adapter<SlotImageAdapter.Slot
         int pos = (int) v.getTag();
         switch (v.getId()){
             case R.id.item_image:
-                if(pos == getItemCount() - 1) {
+                if(pos ==  - 1) {
                     onTtemClickListener.onAddClick(pos);
                 }else{
                     onTtemClickListener.onImageClick((ImageView) v, pos, data.get(pos));

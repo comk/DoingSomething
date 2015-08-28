@@ -133,31 +133,31 @@ public class TimeSlotDao extends AbstractDao<TimeSlot,Long> {
 
         stmt.bindLong(6, entity.getLastModifyTime());
 
-        String referenceObj = entity.getText();
+        String referenceObj = entity.getReferenceObject();
         if (referenceObj != null) {
             stmt.bindString(7, referenceObj);
         }
-        String location = entity.getText();
+        String location = entity.getLocationLatLng();
         if (location != null) {
             stmt.bindString(8, location);
         }
-        String locationString = entity.getText();
+        String locationString = entity.getLocationString();
         if (locationString != null) {
             stmt.bindString(9, locationString);
         }
-        String weather = entity.getText();
+        String weather = entity.getWeather();
         if (weather != null) {
             stmt.bindString(10, weather);
         }
-        String imageUrl = entity.getText();
+        String imageUrl = entity.getImageUrl();
         if (imageUrl != null) {
             stmt.bindString(11, imageUrl);
         }
-        String audioUrl = entity.getText();
+        String audioUrl = entity.getAudioUrl();
         if (audioUrl != null) {
             stmt.bindString(12, audioUrl);
         }
-        String videoUrl = entity.getText();
+        String videoUrl = entity.getVideoUrl();
         if (videoUrl != null) {
             stmt.bindString(13, videoUrl);
         }

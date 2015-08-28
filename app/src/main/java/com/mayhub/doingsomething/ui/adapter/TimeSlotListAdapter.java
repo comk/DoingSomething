@@ -2,6 +2,7 @@ package com.mayhub.doingsomething.ui.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -12,6 +13,7 @@ import com.mayhub.doingsomething.R;
 import com.mayhub.doingsomething.db.TimeSlotDao;
 import com.mayhub.doingsomething.entity.TimeSlot;
 import com.mayhub.doingsomething.util.DateUtils;
+import com.mayhub.doingsomething.util.StringUtils;
 
 
 /**
@@ -47,6 +49,8 @@ public class TimeSlotListAdapter extends CursorAdapter{
         ts.setLevel(cursor.getInt(TimeSlotDao.Properties.Level.ordinal));
         holder.tv_level.setBackgroundColor(ts.getLevelColorBySlotType());
         holder.iv_slotType.setImageResource(ts.getImageResIDBySlotType());
+        Log.e("image list String = ", holder.tv_text.getText().toString());
+        Log.e("image list size = ", StringUtils.getArrayListFromString(cursor.getString(TimeSlotDao.Properties.ImageUrl.ordinal)).size() + "");
     }
 
     private static class ViewHolder{
