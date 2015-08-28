@@ -46,6 +46,11 @@
             android:screenOrientation="portrait"
              >
         </activity>
+        <activity
+            android:name=".ui.ActivityImageViewer"
+            android:screenOrientation="portrait"
+             >
+        </activity>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="5e86d32855e2844412f80bd3345aa835" />
