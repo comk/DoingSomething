@@ -64,6 +64,8 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
 
     private Button btn_submit;
 
+    private TextView textView_weather;
+
     private Spinner spinnerType;
 
     private Spinner spinnerLevel;
@@ -151,6 +153,8 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
 
         textView_location = (TextView) findViewById(R.id.timeslot_add_tv_select_location);
 
+        textView_weather = (TextView) findViewById(R.id.timeslot_add_tv_weather);
+
         btn_submit = (Button) findViewById(R.id.timeslot_add_btn_submit);
 
         spinnerLevel = (Spinner) findViewById(R.id.timeslot_sp_level);
@@ -235,6 +239,9 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
         if (amapLocation!=null&&amapLocation.getAMapException().getErrorCode() == 0) {
             timeSlot.setLocationLatLng(amapLocation.getLatitude() + "," + amapLocation.getLongitude());
             timeSlot.setLocationString(amapLocation.getCountry() + "," + amapLocation.getProvince() + "," + amapLocation.getCity() + "," + amapLocation.getDistrict() + "," + amapLocation.getStreet());
+            textView_location.setText(timeSlot.getLocationString());
+        }else{
+            textView_location.setText("Failed");
         }
     }
 
@@ -261,6 +268,7 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
     @Override
     public void onWeatherLiveSearched(AMapLocalWeatherLive aMapLocalWeatherLive) {
         timeSlot.setWeather(aMapLocalWeatherLive.getWeather() + "," + aMapLocalWeatherLive.getTemperature());
+        textView_weather.setText(timeSlot.getWeather());
     }
 
     @Override
@@ -298,7 +306,6 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
                     imagePath = data.getData().toString();
                 }
             slotImageAdapter.addImage(imagePath);
-            recyclerView_image.findViewWithTag(slotImageAdapter.getItemCount()-1).setTag(slotImageAdapter.getItemCount() - 1);
         }
 
         if(resultCode == RESULT_OK && requestCode == ActivityImageChooser.REQUEST_GET_IMAGES){

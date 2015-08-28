@@ -79,7 +79,6 @@ public class ActivityImageChooser extends ActivityBaseNoTitle {
         recyclerView = (RecyclerView) findViewById(R.id.image_chooser_recyclerview);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(imageChooserAdapter = new ImageChooserAdapter());
-        recyclerView.setItemViewCacheSize(50);
     }
 
     private void initToolbar(){

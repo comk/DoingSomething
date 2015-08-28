@@ -1,5 +1,7 @@
 package com.mayhub.doingsomething.ui.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import com.mayhub.doingsomething.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -18,6 +21,11 @@ import java.util.ArrayList;
 public class ImageChooserAdapter extends RecyclerView.Adapter<ImageChooserAdapter.ImageChooserViewHolder> {
 
     private ArrayList<String> data = new ArrayList<>();
+
+    private static DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder().
+            bitmapConfig(Bitmap.Config.RGB_565).
+            considerExifParams(true).decodingOptions(new BitmapFactory.Options()).
+            build();
 
     private ArrayList<String> selectedItems = new ArrayList<>();
 
@@ -64,7 +72,7 @@ public class ImageChooserAdapter extends RecyclerView.Adapter<ImageChooserAdapte
 
     @Override
     public void onBindViewHolder(ImageChooserViewHolder holder, int position) {
-        ImageLoader.getInstance().displayImage(data.get(position),holder.imageView);
+        ImageLoader.getInstance().displayImage(data.get(position),holder.imageView,displayImageOptions);
         holder.checkBox.setTag(position);
     }
 

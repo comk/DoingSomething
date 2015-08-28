@@ -3,19 +3,29 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-
     defaultConfig {
         applicationId "com.mayhub.doingsomething"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        signingConfig signingConfigs.debug
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    signingConfigs {
+        debug {
+            storeFile file("E:\\comk_res\\keystore\\keystore.jks")
+            keyAlias 'dhandzm'
+            keyPassword 'dh527705090'
+            storePassword 'dh527705090'
+        }
+    }
+    productFlavors {
     }
 }
 
