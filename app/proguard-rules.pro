@@ -15,12 +15,23 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-verbose
+-ignorewarnings
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+
+-keep class com.github.mikephil.charting.** { *; }
+
 -keepclassmembers class * {
    public <init>(org.json.JSONObject);
 }
 
--keep public class com.mayhub.doingsomething.R$*{
-    public static final int *;
+-keepclassmembers class ** {
+    public void onEvent*(**);
 }
 
 -keepclassmembers enum * {
