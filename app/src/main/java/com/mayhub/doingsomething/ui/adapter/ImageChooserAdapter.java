@@ -51,6 +51,10 @@ public class ImageChooserAdapter extends RecyclerView.Adapter<ImageChooserAdapte
         return selectedItems;
     }
 
+    public void setSelectedItems(ArrayList<String> selectedItems1){
+        selectedItems.addAll(selectedItems1);
+    }
+
     @Override
     public ImageChooserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ImageChooserViewHolder imageChooserViewHolder = new ImageChooserViewHolder(ViewGroup.inflate(parent.getContext(),R.layout.activity_image_chooser_item,null));

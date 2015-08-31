@@ -298,7 +298,9 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
 //        }catch (Exception ex){
 //        }
 
-        startActivityForResult(new Intent(getApplicationContext(), ActivityImageChooser.class), ActivityImageChooser.REQUEST_GET_IMAGES);
+        Intent intent = new Intent(getApplicationContext(), ActivityImageChooser.class);
+        intent.putStringArrayListExtra("selectedItems",slotImageAdapter.getData());
+        startActivityForResult(intent, ActivityImageChooser.REQUEST_GET_IMAGES);
 
     }
 

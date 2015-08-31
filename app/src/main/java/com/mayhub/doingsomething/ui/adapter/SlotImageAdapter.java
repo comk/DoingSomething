@@ -32,7 +32,7 @@ public class SlotImageAdapter extends RecyclerView.Adapter<SlotImageAdapter.Slot
     }
 
     public ArrayList<String> getData(){
-        return data;
+        return new ArrayList<String>(data.subList(0,data.size() - 1));
     }
 
     public String getListString(){
