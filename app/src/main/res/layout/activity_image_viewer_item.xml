@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imageviewer_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+
+    <ProgressBar
+        style="@style/mProgress_circle"
+        android:id="@+id/imageviewer_item_pb"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateDuration="1200" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/imageviewer_item_image"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:gravity="right|center_vertical"
+        android:id="@+id/imageviewer_item_option"
+        android:background="#b0000000"
+        android:visibility="invisible"
+        android:layout_gravity="bottom"
+        android:padding="10dip"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="40dip"
+            android:src="@drawable/imageviewer_delete"
+            android:id="@+id/imageviewer_item_delete"
+            android:scaleType="centerInside"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="40dip"
+            android:src="@drawable/imageviewer_save"
+            android:id="@+id/imageviewer_item_save"
+            android:layout_marginLeft="15dip"
+            android:scaleType="centerInside"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="40dip"
+            android:id="@+id/imageviewer_item_like_it"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="15dip"
+            android:src="@drawable/imageviewer_like"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="40dip"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="15dip"
+            android:src="@drawable/imageviewer_comment"
+            android:id="@+id/imageviewer_item_comment_it"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:padding="10dip"
+        android:background="#b0000000"
+        android:visibility="invisible"
+        android:id="@+id/imageviewer_item_view_comment"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom"
+            android:id="@+id/imageviewer_item_comment_cancel"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:id="@+id/imageviewer_item_comment_content"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:hint="What you are think about this?"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom"
+            android:id="@+id/imageviewer_item_comment_ok"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/imageviewer_item_delete_view"
+        android:layout_gravity="bottom"
+        android:visibility="invisible"
+        android:gravity="center_vertical|right"
+        android:background="#b0000000"
+        android:padding="10dip"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/imageviewer_item_delete_cofirm"
+            android:text="确认"
+            android:padding="5dip"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:padding="5dip"
+            android:gravity="center"
+            android:id="@+id/imageviewer_item_delete_cancel"
+            />
+    </LinearLayout>
+</FrameLayout>
