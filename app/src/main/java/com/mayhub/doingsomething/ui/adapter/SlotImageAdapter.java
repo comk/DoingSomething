@@ -31,6 +31,10 @@ public class SlotImageAdapter extends RecyclerView.Adapter<SlotImageAdapter.Slot
         }
     }
 
+    public ArrayList<String> getData(){
+        return data;
+    }
+
     public String getListString(){
        return StringUtils.getStringFromArrayList(new ArrayList<String>(data.subList(0,data.size() - 1)));
     }

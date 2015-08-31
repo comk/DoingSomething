@@ -278,7 +278,11 @@ public class ActivityAddTimeSlot extends ActivityBaseNoTitle implements View.OnC
 
     @Override
     public void onImageClick(ImageView imageView, int position, String url) {
-
+        Intent intent = new Intent(getApplicationContext(),ActivityImageViewer.class);
+        intent.putStringArrayListExtra("ImageList",slotImageAdapter.getData());
+        intent.putExtra("showIndex",position);
+        startActivity(intent);
+        Log.e("onImageClick ","----------------------------");
     }
 
     @Override

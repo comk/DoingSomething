@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.mayhub.doingsomething.R;
 import com.mayhub.doingsomething.util.AnimationBuilder;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -46,7 +47,7 @@ public class ImageViewerAdapter extends PagerAdapter implements View.OnClickList
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return false;
+        return view == object;
     }
 
     @Override
@@ -91,7 +92,7 @@ public class ImageViewerAdapter extends PagerAdapter implements View.OnClickList
         }
 
         bindView(holder, position, isFromCache);
-
+        container.addView(rootView);
         return rootView;
     }
 
@@ -110,7 +111,8 @@ public class ImageViewerAdapter extends PagerAdapter implements View.OnClickList
         holder.view_delete_ok.setTag(position);
         holder.view_comment_ok.setTag(position);
         holder.iv_like.setTag(position);
-        holder.iv_save.setTag(position);
+        holder.iv_save.setTag(data.get(position));
+        ImageLoader.getInstance().displayImage(data.get(position), holder.iv_item);
     }
 
     @Override
@@ -124,11 +126,15 @@ public class ImageViewerAdapter extends PagerAdapter implements View.OnClickList
     public void onClick(View v) {
         //get the holder here
         final ImageViewerHolder holder;
-        if(v.getParent() != null && v.getParent().getParent() != null){
-            holder = (ImageViewerHolder) ((View)(v.getParent().getParent())).getTag();
-        }else{
-            holder = null;
-            return;
+        if(v.getId() == R.id.imageviewer_item_image){
+            holder = (ImageViewerHolder) ((View) (v.getParent())).getTag();
+        }else {
+            if (v.getParent() != null && v.getParent().getParent() != null) {
+                holder = (ImageViewerHolder) ((View) (v.getParent().getParent())).getTag();
+            } else {
+                holder = null;
+                return;
+            }
         }
 
         switch (v.getId()){
@@ -139,6 +145,8 @@ public class ImageViewerAdapter extends PagerAdapter implements View.OnClickList
             case R.id.imageviewer_item_comment_ok:
                 // when click this view we hide option view
                 hideAnimation(holder.view_comment);
+                if(onClickListener != null)
+                    onClickListener.onCommentOkBtnClicked((Integer) v.getTag());
                 break;
             case R.id.imageviewer_item_comment_cancel:
                 //when click this view we show option view
@@ -154,16 +162,20 @@ public class ImageViewerAdapter extends PagerAdapter implements View.OnClickList
                 break;
             case R.id.imageviewer_item_delete_cofirm:
                 //when click this view we hide option view
-                hideAnimation(holder.view_option);
+                hideAnimation(holder.view_delete);
+                if(onClickListener != null)
+                    onClickListener.onDeleteConfirmClicked((Integer) v.getTag());
                 break;
             case R.id.imageviewer_item_like_it:
                 //when click this view we hide option view
                 hideAnimation(holder.view_option);
+                if(onClickListener != null)
+                    onClickListener.onLikeClicked((Integer) v.getTag());
                 break;
             case R.id.imageviewer_item_image:
                 //when click this view we show or hide option view
-                if(holder.view_option.getVisibility() == View.VISIBLE) {
-                    hideAnimation(holder.view_option);
+                if(holder.isShowing()) {
+                    hideAnimation(holder.currentShow);
                 }else{
                     showAnimation(holder.view_option);
                 }
@@ -171,6 +183,8 @@ public class ImageViewerAdapter extends PagerAdapter implements View.OnClickList
             case R.id.imageviewer_item_save:
                 //when click this view we hide option view
                 hideAnimation(holder.view_option);
+                if(onClickListener != null)
+                    onClickListener.onSaveClicked((String) v.getTag());
                 break;
         }
     }
@@ -299,6 +313,25 @@ public class ImageViewerAdapter extends PagerAdapter implements View.OnClickList
          * cancel delete
          */
         public View view_delete_cancel;
+        /**
+         * current visible view
+         */
+        public View currentShow;
+        public boolean isShowing(){
+            if(View.VISIBLE == view_option.getVisibility()) {
+                currentShow = view_option;
+                return true;
+            }
+            if(View.VISIBLE == view_comment.getVisibility()) {
+                currentShow = view_comment;
+                return true;
+            }
+            if(View.VISIBLE == view_delete.getVisibility()) {
+                currentShow = view_delete;
+                return true;
+            }
+            return false;
+        }
 
     }
 
